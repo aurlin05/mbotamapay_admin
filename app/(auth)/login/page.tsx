@@ -5,13 +5,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
-// import { useAuth } from '@/lib/contexts/auth-context'; // 🔒 Commenté pour simulation
+import { useAuth } from '@/lib/contexts/auth-context';
 import { toast } from '@/lib/utils/toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -20,17 +19,10 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-// 🔐 Identifiants statiques pour la démo
-const STATIC_CREDENTIALS = {
-  email: 'admin@mbotamapay.com',
-  password: 'admin123',
-};
-
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string>('');
-  // const { login } = useAuth(); // 🔒 Commenté pour simulation
+  const { login } = useAuth();
 
   const {
     register,
@@ -43,24 +35,8 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setError('');
-
-      // 🔒 LOGIQUE REELLE (commentée pour la démo)
-      // await login(data);
-      // toast.success('Successfully logged in!');
-
-      // ✅ SIMULATION AVEC DONNÉES STATIQUES
-      if (
-        data.email === STATIC_CREDENTIALS.email &&
-        data.password === STATIC_CREDENTIALS.password
-      ) {
-        toast.success('Successfully logged in!');
-        router.push('/dashboard');
-        // 👉 Tu peux rediriger ici : router.push('/dashboard');
-      } else {
-        const errorMessage = 'Invalid email or password. Please try again.';
-        setError(errorMessage);
-        toast.error(errorMessage);
-      }
+      await login(data);
+      toast.success('Successfully logged in!');
     } catch {
       const errorMessage = 'Invalid email or password. Please try again.';
       setError(errorMessage);

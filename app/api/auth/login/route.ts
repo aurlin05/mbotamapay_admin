@@ -6,15 +6,21 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
+    // Map frontend email field to backend identifier field
+    const backendRequest = {
+      identifier: body.email,
+      password: body.password,
+    };
+
     // Forward login request to backend
-    const response = await axios.post(`${API_URL}/api/auth/login`, body);
-    
+    const response = await axios.post(`${API_URL}/api/v1/auth/login`, backendRequest);
+
     const { token, user } = response.data;
-    
+
     // Create response with user data
     const nextResponse = NextResponse.json({ user }, { status: 200 });
-    
+
     // Set JWT token in httpOnly cookie
     nextResponse.cookies.set('auth-token', token, {
       httpOnly: true,
@@ -23,7 +29,7 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     });
-    
+
     return nextResponse;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

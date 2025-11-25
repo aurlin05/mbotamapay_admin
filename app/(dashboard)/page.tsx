@@ -118,7 +118,7 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <div 
+        <div
           className="rounded-lg border border-destructive bg-destructive/10 p-6"
           role="alert"
           aria-live="polite"
@@ -164,7 +164,7 @@ export default function DashboardPage() {
     },
     'total-volume': {
       title: 'Total Volume',
-      value: stats?.totalVolume ? formatCurrency(stats.totalVolume) : '0 XAF',
+      value: stats?.totalFundsCirculating ? formatCurrency(stats.totalFundsCirculating) : '0 XAF',
       icon: Wallet,
     },
   };
@@ -190,9 +190,9 @@ export default function DashboardPage() {
             <Settings className="mr-2 h-4 w-4" aria-hidden="true" />
             Settings
           </Button>
-          <Button 
-            onClick={handleRefresh} 
-            variant="outline" 
+          <Button
+            onClick={handleRefresh}
+            variant="outline"
             size="sm"
             aria-label="Refresh statistics"
           >
@@ -210,7 +210,7 @@ export default function DashboardPage() {
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={visible} strategy={rectSortingStrategy}>
-          <section 
+          <section
             className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
             aria-label="Platform statistics"
           >
@@ -240,7 +240,7 @@ export default function DashboardPage() {
         </SortableContext>
       </DndContext>
 
-      <section 
+      <section
         className="grid gap-4 md:grid-cols-1 lg:grid-cols-2"
         aria-label="Transaction analytics"
       >

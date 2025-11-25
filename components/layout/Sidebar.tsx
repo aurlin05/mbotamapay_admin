@@ -9,6 +9,7 @@ import {
   ArrowLeftRight,
   ChevronLeft,
   ChevronRight,
+  Wallet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -33,6 +34,11 @@ const navigationItems = [
     title: 'Transactions',
     href: '/transactions',
     icon: ArrowLeftRight,
+  },
+  {
+    title: 'Liquidity',
+    href: '/liquidity',
+    icon: Wallet,
   },
 ];
 
@@ -72,13 +78,13 @@ export function Sidebar({ isCollapsed, onToggle, isMobile = false }: SidebarProp
       </div>
 
       {/* Navigation */}
-      <nav 
+      <nav
         id="sidebar-navigation"
-        className="flex-1 space-y-1 p-2" 
+        className="flex-1 space-y-1 p-2"
         aria-labelledby="sidebar-title"
       >
         {navigationItems.map((item) => {
-          const isActive = pathname === item.href || 
+          const isActive = pathname === item.href ||
             (item.href !== '/' && pathname.startsWith(item.href));
           const Icon = item.icon;
 
@@ -113,7 +119,7 @@ export function Sidebar({ isCollapsed, onToggle, isMobile = false }: SidebarProp
             isCollapsed && 'justify-center'
           )}
         >
-          <div 
+          <div
             className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground"
             aria-label="Admin avatar"
           >
